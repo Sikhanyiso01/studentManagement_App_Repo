@@ -1,15 +1,17 @@
 import tkinter as tk
 from tkinter import messagebox
-
+from stuApp import studentApp
 import db
 from db import  Database
 db = Database("studentDB.db")
+
 class Login():
     def __init__(self, root):
         self.root = root
-        self.root.title("Student Management Application")
+        self.root.title("Student Management Application Log in")
         self.root.geometry("350x250")
         self.create_widgets()
+
 
     def verify(self):
         username = self.usernameTxt.get()
@@ -18,6 +20,9 @@ class Login():
         if db.validate( username ,password):
             messagebox.showinfo("info", "Successfully Logged in")
             self.root.destroy()
+
+
+
         else:
             messagebox.showerror("error", "The user does not exists")
 
@@ -55,3 +60,5 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = Login(root)
     root.mainloop()
+
+
