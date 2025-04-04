@@ -1,5 +1,9 @@
 import tkinter as tk
+from tkinter import messagebox
+
+import db
 from db import  Database
+db = Database("studentDB.db")
 class Login():
     def __init__(self, root):
         self.root = root
@@ -10,6 +14,20 @@ class Login():
     def verify(self):
         username = self.usernameTxt.get()
         password = self.password.get()
+
+        if db.validate( username ,password):
+            messagebox.showinfo("info", "Successfully Logged in")
+            self.root.destroy()
+        else:
+            messagebox.showerror("error", "The user does not exists")
+
+    def registering(self):
+        username = self.usernameTxt.get()
+        password = self.password.get()
+        if db.register(username, password):
+            messagebox.showinfo("Success", "User registered successfully!")
+        else:
+            messagebox.showerror("Error", "Username already exists!")
 
     def create_widgets(self):
         self.usernameTxt = tk.StringVar()
@@ -26,10 +44,10 @@ class Login():
         self.password_Entry = tk.Entry(self.root, textvariable=self.password)
         self.password_Entry.grid(column=2, row=1)
 
-        self.loginBtn = tk.Button(self.root, text="Log in", width=15, padx=10)
+        self.loginBtn = tk.Button(self.root, text="Log in", width=15, padx=10, command=self.verify)
         self.loginBtn.grid(column=2, row=3)
 
-        self.SignInBtn = tk.Button(self.root, text="Sign Up", width=15, padx=10)
+        self.SignInBtn = tk.Button(self.root, text="Sign Up", width=15, padx=10, command=self.registering)
         self.SignInBtn.grid(column=2, row=4)
 
 

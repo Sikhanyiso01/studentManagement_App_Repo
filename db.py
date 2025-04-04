@@ -7,10 +7,19 @@ class Database():
         self.cur.execute(
             "CREATE TABLE IF NOT EXISTS userlog(username TEXT  PRIMARY KEY , password text)")
         self.conn.commit()
-    def getUser(self):
-        self.cur.execute("SELECT username=?, password=? FROM userlog")
-        rows = self.cur.fetchone()
-        return rows
+
+    def validate(self, username, password):
+        self.cur.execute("SELECT * FROM userlog WHERE username = ? AND password = ? ", (username, password))
+        return  self.cur.fetchone()
+
+    def register(self, username, password):
+      try:
+          self.cur.execute("INSERT INTO userlog (username, password) VALUES (?, ?)", (username, password))
+
+          self.conn.commit()
+          return True
+      except sqlite3.InternalError:
+          return False
 
     def fetch(self):
         self.cur.execute("SELECT * FROM students")
