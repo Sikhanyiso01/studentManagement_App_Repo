@@ -7,6 +7,9 @@ class Login():
         self.root.geometry("350x250")
         self.create_widgets()
 
+    def verify(self):
+        username = self.usernameTxt.get()
+        password = self.password.get()
 
     def create_widgets(self):
         self.usernameTxt = tk.StringVar()
@@ -25,6 +28,9 @@ class Login():
 
         self.loginBtn = tk.Button(self.root, text="Log in", width=15, padx=10)
         self.loginBtn.grid(column=2, row=3)
+
+        self.SignInBtn = tk.Button(self.root, text="Sign Up", width=15, padx=10)
+        self.SignInBtn.grid(column=2, row=4)
 
 
 if __name__ == "__main__":

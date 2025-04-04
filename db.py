@@ -4,7 +4,13 @@ class Database():
         self.conn = sqlite3.connect(db)
         self.cur = self.conn.cursor()
         self.cur.execute("CREATE TABLE IF NOT EXISTS students(studentID INTEGER  PRIMARY KEY AUTOINCREMENT, name text, surname text, program text, gender text, phone text)")
+        self.cur.execute(
+            "CREATE TABLE IF NOT EXISTS userlog(username TEXT  PRIMARY KEY , password text)")
         self.conn.commit()
+    def getUser(self):
+        self.cur.execute("SELECT username=?, password=? FROM userlog")
+        rows = self.cur.fetchone()
+        return rows
 
     def fetch(self):
         self.cur.execute("SELECT * FROM students")
@@ -22,4 +28,6 @@ class Database():
         self.conn.commit()
     def __del__(self):
         self.conn.close()
+
+
 db = Database("studentDB.db")
